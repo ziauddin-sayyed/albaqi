@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Al Baqi Tours - Hajj & Umrah Packages</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Owl Carousel -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+  <style>
+    .owl-item.active.center .package-card { transform: scale(1.05); opacity: 1; filter: blur(0); }
+    .owl-item.active:not(.center) .package-card { transform: scale(0.9); opacity: 0.6; filter: blur(2px); }
+    .owl-stage-outer{padding: 2% 0;}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-25">
+        <div class="flex items-center gap-6">
+          <a href="#" class="flex items-center gap-3">
+            <img src="https://albaqi.net/wp-content/uploads/2024/06/logo.png" alt="logo" class="h-full py-2 object-contain"/>
+          </a>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a class="hover:text-red-600" href="#">Home</a>
+          <a class="hover:text-red-600 font-semibold" href="#">Hajj Packages</a>
+          <a class="hover:text-red-600" href="#">Umrah Packages</a>
+          <a class="hover:text-red-600" href="#">Ramadan Umrah</a>
+          <a class="hover:text-red-600" href="#">Baghdad Ziyarat</a>
+          <a class="hover:text-red-600" href="#">Contact Us</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <a href="#" class="hidden md:inline-block text-sm px-4 py-2 border rounded-full">Login</a>
+          <button id="mobile-menu-btn" class="md:hidden p-2 rounded bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobile-nav" class="md:hidden hidden bg-white border-t">
+      <div class="px-4 pb-4 space-y-2">
+        <a class="block py-2" href="#">Home</a>
+        <a class="block py-2 font-semibold" href="#">Hajj Packages</a>
+        <a class="block py-2" href="#">Umrah Packages</a>
+        <a class="block py-2" href="#">Ramadan Umrah</a>
+        <a class="block py-2" href="#">Baghdad Ziyarat</a>
+        <a class="block py-2" href="#">Contact Us</a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- Hero -->
+  <section class="relative bg-gray-900 text-white h-[700px] flex items-center justify-center">
+    <img src="https://cdn.pixabay.com/photo/2017/04/13/10/35/kabba-2227164_1280.jpg" class="absolute inset-0 w-full h-full object-cover opacity-70"/>
+    <div class="relative text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Better Pilgrimage Packages</h2>
+      <p class="mb-6">Explore Hajj, Umrah, and Ramadan Umrah Packages</p>
+      <div class="flex justify-center gap-4">
+        <a href="#contact" class="px-6 py-3 bg-red-600 rounded-lg hover:bg-red-700">Get a Call Back</a>
+        <a href="https://wa.me/919999999999" class="px-6 py-3 bg-green-600 rounded-lg hover:bg-green-700">WhatsApp Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Sections (Hajj, Umrah, Ramadan) -->
+  <script>
+    function renderSection(id, title, images) {
+      return `
+        <section id="${id}" class="py-12">
+          <h2 class="text-3xl font-bold text-center mb-8">${title}</h2>
+          <div class="relative max-w-7xl mx-auto px-6">
+            <div class="owl-carousel owl-theme">
+              ${images.map((img, i) => `
+                <div class="package-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500">
+                  <div class="overflow-hidden">
+                    <img src="${img}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110"/>
+                  </div>
+                  <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-3">${title} ${i+1}</h3>
+                    <ul class="space-y-2 text-gray-600 mb-4 list-disc pl-5">
+                      <li>Luxury Hotels</li>
+                      <li>All Meals Included</li>
+                      <li>Guided Tours</li>
+                      <li>Flights Included</li>
+                    </ul>
+                    <p class="text-lg font-bold text-red-600 mb-4">From ₹${80+i*25},000 / person</p>
+                    <div class="flex gap-3">
+                      <button class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Read More</button>
+                      <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Book Now</button>
+                    </div>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+  </script>
+
+  <div id="sections"></div>
+
+  <!-- Media Section -->
+  <section id="media" class="py-12 bg-gray-100">
+    <h2 class="text-3xl font-bold text-center mb-8">Media</h2>
+      <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6">
+        <img src="https://tse2.mm.bing.net/th/id/OIP.a5WltMmjZT0vt7fWVsyF3QAAAA?pid=Api&P=0&h=700" class="h-72 w-full object-cover rounded-lg shadow-md hover:scale-105 transition"/>
+        <img src="https://tse1.mm.bing.net/th/id/OIP.nAmYwRuxzRaqLbavZwScdgAAAA?pid=Api&P=0&h=700" class="h-72 w-full object-cover rounded-lg shadow-md hover:scale-105 transition"/>
+        <img src="https://tse3.mm.bing.net/th/id/OIP.Hj6nC1_Y3DfbwbcE_UPdFQHaK5?pid=Api&P=0&h=700" class="h-72 w-full object-cover rounded-lg shadow-md hover:scale-105 transition"/>
+      </div>
+  </section>
+
+  <!-- Blogs Section -->
+  <section id="blogs" class="py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">Our Blog</h2>
+    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img src="https://tse3.mm.bing.net/th/id/OIP.nvvHFEXPgYM4Y711lq_41QAAAA?pid=Api&P=0&h=700" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-2">Preparing for Hajj</h3>
+          <p class="text-gray-600 text-sm">Tips and guidance for first-time pilgrims.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img src="https://tse2.mm.bing.net/th/id/OIP.6XTzQOyonty8qJORXDHXAAAAAA?pid=Api&P=0&h=700" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-2">Ramadan in Makkah</h3>
+          <p class="text-gray-600 text-sm">Spiritual experience during the holy month.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img src="https://tse4.mm.bing.net/th/id/OIP.h2nd7L66SgBvaNfPnD5XYwAAAA?pid=Api&P=0&h=700" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-2">Umrah Travel Guide</h3>
+          <p class="text-gray-600 text-sm">Step-by-step guide for a smooth Umrah journey.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section id="about" class="py-12 bg-gray-100">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-4">About Us</h2>
+      <p class="text-gray-700 max-w-3xl mx-auto">Al Baqi Tours & Travels Pvt. Ltd. has been a trusted Hajj & Umrah operator for over 30 years, providing exceptional services and experiences for pilgrims across India.</p>
+    </div>
+  </section>
+
+  <!-- Client Logos -->
+  <section class="py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">Our Partners</h2>
+    <div class="flex justify-center flex-wrap gap-6 px-6">
+      <img src="https://tse4.mm.bing.net/th/id/OIP.zJlSm-1GTBxtwk1WsovqDgAAAA?pid=Api&P=0&h=700" class="h-16 object-contain"/>
+      <img src="https://tse1.mm.bing.net/th/id/OIP.ajKWpCdvTE9Hnt1h3ZhFTgHaJ4?pid=Api&P=0&h=700" class="h-16 object-contain"/>
+      <img src="https://tse1.mm.bing.net/th/id/OIP.k7ptpApZJZx7xHfG8J7pywAAAA?pid=Api&P=0&h=700" class="h-16 object-contain"/>
+      <img src="https://tse1.mm.bing.net/th/id/OIP.RkiIgzGeXjRN6QwzTswRIQAAAA?pid=Api&P=0&h=700" class="h-16 object-contain"/>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <!-- How Can We Help Section -->
+  <section id="contact" class="py-12 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+
+        <!-- Media Slider (Left Side) -->
+        <div class="bg-white rounded-lg shadow-lg p-2">
+            <img src="https://tse3.mm.bing.net/th/id/OIP.sHGHXlne3Xg4kHSs2IL5WQAAAA?pid=Api&P=0&h=700" class="rounded-md w-full h-64 object-cover"/>
+            <p class="text-sm mt-2 text-center">Legacy of Trust, Journey of Faith</p>
+        </div>
+
+        <!-- Contact Form (Right Side) -->
+        <div>
+          <h2 class="text-3xl font-bold text-red-600 mb-4">How Can We Help?</h2>
+          <p class="text-gray-600 mb-6">
+            Whether you're looking to book a pilgrimage, have questions about packages, 
+            or need assistance — we're here to guide you every step of the way.
+          </p>
+          <form class="bg-white shadow-lg rounded-lg p-6 space-y-4">
+            <input type="text" placeholder="Name*" class="w-full px-4 py-2 border rounded-lg"/>
+            
+            <!-- Mobile number with country code -->
+            <div class="flex">
+              <span class="flex items-center px-3 border rounded-l-lg bg-gray-100">🇮🇳</span>
+              <input type="tel" placeholder="Mobile Number*" class="w-full px-4 py-2 border-t border-b border-r rounded-r-lg"/>
+            </div>
+
+            <input type="email" placeholder="Your Email" class="w-full px-4 py-2 border rounded-lg"/>
+            
+            <select class="w-full px-4 py-2 border rounded-lg">
+              <option>Select Tour*</option>
+              <option>Hajj</option>
+              <option>Umrah</option>
+              <option>Ramadan Umrah</option>
+            </select>
+            
+            <div class="flex items-center">
+              <input type="checkbox" id="policy" class="mr-2"/>
+              <label for="policy" class="text-sm text-gray-600">I accept the <a href="#" class="text-red-600">Privacy Policy</a>.</label>
+            </div>
+            
+            <button class="w-full px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700">
+              Send Inquiry
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div>
+        <h3 class="text-lg font-bold mb-3 text-white">Al Baqi Tours</h3>
+        <p>Trusted Hajj & Umrah Operator for 30+ years.</p>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold mb-3 text-white">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="#about" class="hover:text-red-500">About Us</a></li>
+          <li><a href="#hajj" class="hover:text-red-500">Packages</a></li>
+          <li><a href="#contact" class="hover:text-red-500">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold mb-3 text-white">Newsletter</h3>
+        <form class="flex gap-2">
+          <input type="email" placeholder="Your email" class="px-3 py-2 rounded-lg w-full text-gray-900"/>
+          <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <p class="text-center text-gray-500 mt-6">© 2025 Al Baqi Tours & Travels</p>
+  </footer>
+
+  <!-- Floating Buttons -->
+  <a href="https://wa.me/919999999999" class="z-10 w-36 fixed bottom-6 right-6 bg-green-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-700">💬 WhatsApp</a>
+  <a href="#contact" class="z-10 w-36 fixed bottom-20 right-6 bg-red-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-red-700">📞 Call Back</a>
+
+  <!-- Init Carousels -->
+  <script>
+    const sections = [
+      {id:"hajj", title:"Hajj Packages", images:["https://tse4.mm.bing.net/th/id/OIP.crbJYRJDN3wGrs4FplCH_wHaNK?pid=Api&P=0&h=700","https://tse3.mm.bing.net/th/id/OIP.lNkRK3h2w5B4flF56i2HhQAAAA?pid=Api&P=0&h=700","https://tse2.mm.bing.net/th/id/OIP.ontV9FiWd874_f0U_K7_IwAAAA?pid=Api&P=0&h=700"]},
+      {id:"umrah", title:"Umrah & Ziyarat Packages", images:["https://tse1.mm.bing.net/th/id/OIP.VLvMIUNRuDqPYo-oTBhExQHaLH?pid=Api&P=0&h=700","https://tse2.mm.bing.net/th/id/OIP.GK62bJge396bpUnW9tpbmAAAAA?pid=Api&P=0&h=700","https://tse3.mm.bing.net/th/id/OIP.uIqXpFv3DN9fZGYPq03a7gAAAA?pid=Api&P=0&h=700"]},
+      {id:"ramadan", title:"Ramadan Umrah Packages", images:["https://tse4.mm.bing.net/th/id/OIP.GowbTKQ_F2tmt2weRr4teAAAAA?pid=Api&P=0&h=700","https://tse4.mm.bing.net/th/id/OIP.BQ6yjH3JWm6Z6BhjfsKLYgAAAA?pid=Api&P=0&h=700","https://tse2.mm.bing.net/th/id/OIP.GSNd6VXka81WG_I6j3Zz8AAAAA?pid=Api&P=0&h=700"]}
+    ];
+    $("#sections").html(sections.map(s => renderSection(s.id, s.title, s.images)).join(""));
+
+    $(document).ready(function(){
+      $(".owl-carousel").each(function(){
+        const $carousel = $(this);
+        $carousel.owlCarousel({
+          loop:true,
+          margin:20,
+          center:true,
+          autoplay:false,
+          autoplayTimeout:4000,
+          smartSpeed:600,
+          responsive:{
+            0:{ items:1 },
+            768:{ items:2 },
+            1024:{ items:3 }
+          }
+        });
+      });
+
+      $("#contact .owl-carousel").owlCarousel({
+        loop:true,
+        margin:10,
+        nav:true,
+        dots:true,
+        autoplay:false,
+        autoplayTimeout:4000,
+        smartSpeed:600,
+        items:1
+      });
+
+      $('#mobile-menu-btn').on('click', function(){
+        $('#mobile-nav').toggleClass('hidden');
+      });
+
+
+    });
+  </script>
+</body>
+</html>
