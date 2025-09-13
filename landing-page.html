@@ -17,7 +17,6 @@
   <meta name="twitter:description" content="Trusted Hajj and Umrah travel agency offering affordable, all-inclusive pilgrimage packages with expert guidance and seamless service from start to finish." />
   <meta name="twitter:image" content="https://tse2.mm.bing.net/th/id/OIP.a5WltMmjZT0vt7fWVsyF3QAAAA?pid=Api&P=0&h=700" />
 
-
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -33,6 +32,55 @@
     .owl-item.active.center .package-card { transform: scale(1.05); opacity: 1; filter: blur(0); }
     .owl-item.active:not(.center) .package-card { transform: scale(0.9); opacity: 0.6; filter: blur(2px); }
     .owl-stage-outer{padding: 2% 0;}
+    
+    /* Modal Styles */
+    .package-modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 10px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .package-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .package-details {
+        grid-template-columns: 1fr;
+      }
+    }
+    .detail-group {
+      margin-bottom: 15px;
+    }
+    .detail-group h4 {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #b91c1c;
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -49,11 +97,11 @@
 
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a class="hover:text-red-600" href="#">Home</a>
-          <a class="hover:text-red-600 font-semibold" href="#">Hajj Packages</a>
-          <a class="hover:text-red-600" href="#">Umrah Packages</a>
-          <a class="hover:text-red-600" href="#">Ramadan Umrah</a>
+          <a class="hover:text-red-600 font-semibold" href="#hajj">Hajj Packages</a>
+          <a class="hover:text-red-600" href="#umrah">Umrah Packages</a>
+          <a class="hover:text-red-600" href="#ramadan">Ramadan Umrah</a>
           <a class="hover:text-red-600" href="#">Baghdad Ziyarat</a>
-          <a class="hover:text-red-600" href="#">Contact Us</a>
+          <a class="hover:text-red-600" href="#contact">Contact Us</a>
         </nav>
 
         <div class="flex items-center gap-3">
@@ -71,15 +119,14 @@
     <div id="mobile-nav" class="md:hidden hidden bg-white border-t">
       <div class="px-4 pb-4 space-y-2">
         <a class="block py-2" href="#">Home</a>
-        <a class="block py-2 font-semibold" href="#">Hajj Packages</a>
-        <a class="block py-2" href="#">Umrah Packages</a>
-        <a class="block py-2" href="#">Ramadan Umrah</a>
+        <a class="block py-2 font-semibold" href="#hajj">Hajj Packages</a>
+        <a class="block py-2" href="#umrah">Umrah Packages</a>
+        <a class="block py-2" href="#ramadan">Ramadan Umrah</a>
         <a class="block py-2" href="#">Baghdad Ziyarat</a>
-        <a class="block py-2" href="#">Contact Us</a>
+        <a class="block py-2" href="#contact">Contact Us</a>
       </div>
     </div>
   </header>
-
 
   <!-- Hero -->
   <section class="relative bg-gray-900 text-white h-[700px] flex items-center justify-center">
@@ -94,43 +141,22 @@
     </div>
   </section>
 
-  <!-- Dynamic Sections (Hajj, Umrah, Ramadan) -->
-  <script>
-    function renderSection(id, title, images) {
-      return `
-        <section id="${id}" class="py-12">
-          <h2 class="text-3xl font-bold text-center mb-8">${title}</h2>
-          <div class="relative max-w-7xl mx-auto px-6">
-            <div class="owl-carousel owl-theme">
-              ${images.map((img, i) => `
-                <div class="package-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500">
-                  <div class="overflow-hidden">
-                    <img src="${img}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110"/>
-                  </div>
-                  <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-3">${title} ${i+1}</h3>
-                    <ul class="space-y-2 text-gray-600 mb-4 list-disc pl-5">
-                      <li>Luxury Hotels</li>
-                      <li>All Meals Included</li>
-                      <li>Guided Tours</li>
-                      <li>Flights Included</li>
-                    </ul>
-                    <p class="text-lg font-bold text-red-600 mb-4">From ₹${80+i*25},000 / person</p>
-                    <div class="flex gap-3">
-                      <button class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">Read More</button>
-                      <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Book Now</button>
-                    </div>
-                  </div>
-                </div>
-              `).join("")}
-            </div>
-          </div>
-        </section>
-      `;
-    }
-  </script>
+  <!-- Loading Indicator -->
+  <div id="loading" class="text-center py-12">
+    <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
+    <p class="mt-4 text-gray-600">Loading packages...</p>
+  </div>
 
+  <!-- Package Sections will be inserted here -->
   <div id="sections"></div>
+
+  <!-- Package Modal -->
+  <div id="packageModal" class="package-modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
 
   <!-- Media Section -->
   <section id="media" class="py-12 bg-gray-100">
@@ -190,7 +216,6 @@
   </section>
 
   <!-- Contact Section -->
-  <!-- How Can We Help Section -->
   <section id="contact" class="py-12 bg-gray-100">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid md:grid-cols-2 gap-8 items-start">
@@ -241,8 +266,6 @@
     </div>
   </section>
 
-  
-
   <!-- Footer -->
   <footer class="bg-gray-900 text-gray-300 py-8 mt-12">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6">
@@ -270,53 +293,271 @@
   </footer>
 
   <!-- Floating Buttons -->
-  <a href="https://wa.me/919999999999" class="z-10 w-36 fixed bottom-6 right-6 bg-green-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-700">💬 WhatsApp</a>
-  <a href="#contact" class="z-10 w-36 fixed bottom-20 right-6 bg-red-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-red-700">📞 Call Back</a>
+  <a href="https://wa.me/919999999999" class="z-10 w-36 fixed bottom-6 right-6 bg-green-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-700 flex items-center gap-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    WhatsApp Us
+  </a>
 
-  <!-- Init Carousels -->
   <script>
-    const sections = [
-      {id:"hajj", title:"Hajj Packages", images:["https://tse4.mm.bing.net/th/id/OIP.crbJYRJDN3wGrs4FplCH_wHaNK?pid=Api&P=0&h=700","https://tse3.mm.bing.net/th/id/OIP.lNkRK3h2w5B4flF56i2HhQAAAA?pid=Api&P=0&h=700","https://tse2.mm.bing.net/th/id/OIP.ontV9FiWd874_f0U_K7_IwAAAA?pid=Api&P=0&h=700"]},
-      {id:"umrah", title:"Umrah & Ziyarat Packages", images:["https://tse1.mm.bing.net/th/id/OIP.VLvMIUNRuDqPYo-oTBhExQHaLH?pid=Api&P=0&h=700","https://tse2.mm.bing.net/th/id/OIP.GK62bJge396bpUnW9tpbmAAAAA?pid=Api&P=0&h=700","https://tse3.mm.bing.net/th/id/OIP.uIqXpFv3DN9fZGYPq03a7gAAAA?pid=Api&P=0&h=700"]},
-      {id:"ramadan", title:"Ramadan Umrah Packages", images:["https://tse4.mm.bing.net/th/id/OIP.GowbTKQ_F2tmt2weRr4teAAAAA?pid=Api&P=0&h=700","https://tse4.mm.bing.net/th/id/OIP.BQ6yjH3JWm6Z6BhjfsKLYgAAAA?pid=Api&P=0&h=700","https://tse2.mm.bing.net/th/id/OIP.GSNd6VXka81WG_I6j3Zz8AAAAA?pid=Api&P=0&h=700"]}
-    ];
-    $("#sections").html(sections.map(s => renderSection(s.id, s.title, s.images)).join(""));
+    // Google Sheets integration for public sheets
+    const SHEET_ID = '1wShbi3l0zxt7ect-y2_c3nUYCJG6M4osKFSCo7FnjLs'; // Replace with your Google Sheet ID
+    const SHEET_NAME = 'packages'; // Name of the sheet/tab
+    
+    // Function to fetch data from public Google Sheet
 
-    $(document).ready(function(){
-      $(".owl-carousel").each(function(){
-        const $carousel = $(this);
-        $carousel.owlCarousel({
-          loop:true,
-          margin:20,
-          center:true,
-          autoplay:false,
-          autoplayTimeout:4000,
-          smartSpeed:600,
-          responsive:{
-            0:{ items:1 },
-            768:{ items:2 },
-            1024:{ items:3 }
+        async function fetchPackages() {
+
+          const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_NAME}`;
+
+          fetch(url)
+            .then(res => res.text())
+            .then(text => {
+
+                const jsonStr = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                const json = JSON.parse(jsonStr);
+
+                // Extract headers
+                const headers = json.table.cols.map(col => col.label || col.id);
+
+                // Parse data into array of objects
+                const rows = json.table.rows;
+                const objects = rows.map(row => {
+                  const obj = {};
+                  row.c.forEach((cell, i) => {
+                    obj[headers[i]] = cell?.v ?? null;
+                  });
+                  return obj;
+                });
+
+                // Group by 'type'
+                const grouped = {};
+                objects.forEach(item => {
+                  const groupKey = item.type;
+                  if (!grouped[groupKey]) {
+                    grouped[groupKey] = [];
+                  }
+                  grouped[groupKey].push(item);
+                });
+
+                console.log(grouped); 
+                generateSections(grouped);
+                document.getElementById('loading').style.display = 'none';
+
+
+            })
+            .catch(err => console.error('Error fetching or parsing data:', err));
+
           }
+
+
+
+    // Function to generate sections based on package types
+    function generateSections(packagesByType) {
+      const sectionsContainer = document.getElementById('sections');
+      
+      // Create sections for each package type
+      for (const [type, packages] of Object.entries(packagesByType)) {
+        const sectionId = type.toLowerCase().replace(/\s+/g, '-');
+        
+        const section = document.createElement('section');
+        section.id = sectionId;
+        section.className = 'py-12';
+        section.innerHTML = `
+          <h2 class="text-3xl font-bold text-center mb-8 capitalize">${type} Packages</h2>
+          <div class="owl-carousel owl-theme max-w-6xl mx-auto px-6">
+            ${packages.map(pkg => createPackageCard(pkg, type)).join('')}
+          </div>
+        `;
+        
+        sectionsContainer.appendChild(section);
+      }
+      
+      // Initialize carousels
+      $('.owl-carousel').owlCarousel({
+        center: true,
+        loop: true,
+        margin: 20,
+        nav: true,
+        dots: false,
+        responsive: {
+          0: { items: 1 },
+          768: { items: 2 },
+          1024: { items: 3 }
+        }
+      });
+      
+      // Add event listeners to package cards
+      document.querySelectorAll('.package-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const packageData = JSON.parse(this.getAttribute('data-package'));
+          showPackageDetails(packageData);
         });
       });
+    }
+    
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      
+      try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric' 
+        });
+      } catch (e) {
+        return dateString;
+      }
+    }
 
-      $("#contact .owl-carousel").owlCarousel({
-        loop:true,
-        margin:10,
-        nav:true,
-        dots:true,
-        autoplay:false,
-        autoplayTimeout:4000,
-        smartSpeed:600,
-        items:1
-      });
 
-      $('#mobile-menu-btn').on('click', function(){
-        $('#mobile-nav').toggleClass('hidden');
-      });
+    // Function to create a package card
+    function createPackageCard(pkg, type) {
+      return `
+        <div class="package-card cursor-pointer" data-package='${JSON.stringify(pkg).replace(/'/g, "&#39;")}'>
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-xl">
+            <img src="${pkg.image || 'https://tse2.mm.bing.net/th/id/OIP.a5WltMmjZT0vt7fWVsyF3QAAAA?pid=Api&P=0&h=700'}" class="h-48 w-full object-cover"/>
 
+            <div class="p-4 flex-grow">
+              <h3 class="font-bold text-lg mb-2">${pkg.name || 'Package'}</h3>
+              <p class="text-gray-600 text-sm mb-4">${pkg.short_description || ''}</p>
+              
+              <!-- Package Information -->
+              <div class="mb-4 border-t border-gray-100 pt-3">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm text-gray-500">Type:</span>
+                  <span class="text-sm font-medium">${pkg.type || ''}</span>
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm text-gray-500">Duration:</span>
+                  <span class="text-sm font-medium">${pkg.DURATION || ''}</span>
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm text-gray-500">Departure:</span>
+                  <span class="text-sm font-medium text-right">${pkg['Departure city'] || ''} on ${formatDate(pkg['Departure DATE']) || ''}</span>
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm text-gray-500">Arrival:</span>
+                  <span class="text-sm font-medium text-right">${pkg['Arrival city'] || ''} on ${formatDate(pkg['Arrival DATE']) || ''}</span>
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm text-gray-500">Meal:</span>
+                  <span class="text-sm font-medium">${pkg.Meal || ''}</span>
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm text-gray-500">Transfers:</span>
+                  <span class="text-sm font-medium">${pkg.Transfers || ''}</span>
+                </div>
+              </div>
+              
+              <!-- Price and Type Badge -->
+              <div class="flex justify-between items-center mt-4">
+                <span class="text-red-600 font-bold">${pkg.cost ? `From: ₹${pkg.cost}` : ''}</span>
+                <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm">${type || ''}</span>
+              </div>
+            </div>
 
+          </div>
+        </div>
+      `;
+    }
+    
+    // Function to show package details in modal
+    function showPackageDetails(pkg) {
+      const modal = document.getElementById('packageModal');
+      const modalContent = document.getElementById('modalContent');
+      
+      modalContent.innerHTML = `
+        <h2 class="text-2xl font-bold mb-4">${pkg.name || 'Package Details'}</h2>
+        <div class="package-details">
+          <div>
+            <div class="detail-group">
+              <h4>Package Information</h4>
+              <p><strong>Type:</strong> ${pkg.type || ''}</p>
+              <p><strong>Duration:</strong> ${pkg.DURATION || ''}</p>
+              <p><strong>Departure:</strong> ${pkg['Departure city'] || ''} on ${pkg['Departure DATE'] || ''}</p>
+              <p><strong>Arrival:</strong> ${pkg['Arrival city'] || ''} on ${pkg['Arrival DATE'] || ''}</p>
+              <p><strong>Meal:</strong> ${pkg.Meal || ''}</p>
+              <p><strong>Transfers:</strong> ${pkg.Transfers || ''}</p>
+            </div>
+            
+            <div class="detail-group">
+              <h4>Makkah Accommodation</h4>
+              <p><strong>Hotel:</strong> ${pkg.hotel_name || ''}</p>
+              <p><strong>Stay:</strong> ${pkg['Stay in Makkah'] || ''}</p>
+              <p><strong>Distance from Haram:</strong> ${pkg['Distance (Makkah)'] || ''}</p>
+              <p><strong>Check-in/Check-out:</strong> ${pkg['Check-in Date'] || ''} to ${pkg['Check Out Date'] || ''}</p>
+            </div>
+          </div>
+          
+          <div>
+            <div class="detail-group">
+              <h4>Madina Accommodation</h4>
+              <p><strong>Stay:</strong> ${pkg['Stay in Madina'] || ''}</p>
+              <p><strong>Distance from Haram:</strong> ${pkg['Distance (Madina)'] || ''}</p>
+              <p><strong>Check-in/Check-out:</strong> ${pkg['Check In Date (Madina)'] || ''} to ${pkg['Check Out Date (Madina)'] || ''}</p>
+            </div>
+            
+            <div class="detail-group">
+              <h4>Additional Information</h4>
+              <p><strong>Hajj Camp:</strong> ${pkg['HAJJ CAMP'] || ''}</p>
+              <p><strong>Sector:</strong> ${pkg.Sector || ''}</p>
+              <p><strong>Serviceable Airports:</strong> ${pkg['Serviceable Airports'] || ''}</p>
+            </div>
+            
+            <div class="detail-group">
+              <h4>Policies</h4>
+              <p><strong>Child Policy:</strong> ${pkg['CHILD POLICY'] || ''}</p>
+              <p><strong>Cancellation Policy:</strong> ${pkg['CANCELLATION POLICY'] || ''}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6">
+          <h4 class="font-bold mb-2">Package Inclusions</h4>
+          <p>${pkg['PACKAGE INCLUSIONS'] || 'Not specified'}</p>
+        </div>
+        
+        <div class="mt-4">
+          <h4 class="font-bold mb-2">Package Exclusions</h4>
+          <p>${pkg['PACKAGE EXCLUSIONS'] || 'Not specified'}</p>
+        </div>
+        
+        <div class="mt-4">
+          <h4 class="font-bold mb-2">Documents Required</h4>
+          <p>${pkg['DOCUMENTS REQUIRED'] || 'Not specified'}</p>
+        </div>
+        
+        <div class="mt-6 text-center">
+          <button class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700">Book Now</button>
+        </div>
+      `;
+      
+      modal.style.display = 'block';
+      
+      // Close modal when clicking on X
+      document.querySelector('.close').onclick = function() {
+        modal.style.display = 'none';
+      };
+      
+      // Close modal when clicking outside
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      };
+    }
+    
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      const mobileNav = document.getElementById('mobile-nav');
+      mobileNav.classList.toggle('hidden');
     });
+    
+    // Fetch packages when page loads
+    document.addEventListener('DOMContentLoaded', fetchPackages);
   </script>
 </body>
 </html>
