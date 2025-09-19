@@ -334,23 +334,20 @@
                 // Group by 'type'
                 // console.log(objects);
                 
-                try {
-                  const grouped = {};
-                  objects.forEach(item => {
-                    const groupKey = item.type;
-                    if (!grouped[groupKey]) {
-                      grouped[groupKey] = [];
-                    }
-                    grouped[groupKey].push(item);
-                    generateSections(grouped);
-                    document.getElementById('loading').style.display = 'none';
+                const grouped = {};
+                objects.forEach(item => {
+                  const groupKey = item.type;
+                  if (!grouped[groupKey]) {
+                    grouped[groupKey] = [];
+                  }
+                  grouped[groupKey].push(item);
+                });
 
-                  });
+                console.log(grouped); 
+                generateSections(grouped);
+                document.getElementById('loading').style.display = 'none';
 
-                  
-                } catch (error) {
-                  console.log(error);
-                }
+
             })
             .catch(err => console.error('Error fetching or parsing data:', err));
 
