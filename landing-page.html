@@ -332,20 +332,25 @@
                 });
 
                 // Group by 'type'
-                const grouped = {};
-                objects.forEach(item => {
-                  const groupKey = item.type;
-                  if (!grouped[groupKey]) {
-                    grouped[groupKey] = [];
-                  }
-                  grouped[groupKey].push(item);
-                });
+                // console.log(objects);
+                
+                try {
+                  const grouped = {};
+                  objects.forEach(item => {
+                    const groupKey = item.type;
+                    if (!grouped[groupKey]) {
+                      grouped[groupKey] = [];
+                    }
+                    grouped[groupKey].push(item);
+                    generateSections(grouped);
+                    document.getElementById('loading').style.display = 'none';
 
-                console.log(grouped); 
-                generateSections(grouped);
-                document.getElementById('loading').style.display = 'none';
+                  });
 
-
+                  
+                } catch (error) {
+                  console.log(error);
+                }
             })
             .catch(err => console.error('Error fetching or parsing data:', err));
 
@@ -487,8 +492,8 @@
               <h4>Makkah Accommodation</h4>
               <p><strong>Hotel:</strong> ${pkg.hotel_name || ''}</p>
               <p><strong>Stay:</strong> ${pkg['Stay in Makkah'] || ''}</p>
-              <p><strong>Distance from Haram:</strong> ${pkg['Distance (Makkah)'] || ''}</p>
-              <p><strong>Check-in/Check-out:</strong> ${pkg['Check-in Date'] || ''} to ${pkg['Check Out Date'] || ''}</p>
+              <p><strong>Distance from Haram:</strong> ${pkg['Distance Makkah'] || ''}</p>
+              <p><strong>Check-in/Check-out:</strong> ${pkg['Check in Date Makkah'] || ''} to ${pkg['Check Out Date Makkah'] || ''}</p>
             </div>
           </div>
           
@@ -496,8 +501,8 @@
             <div class="detail-group">
               <h4>Madina Accommodation</h4>
               <p><strong>Stay:</strong> ${pkg['Stay in Madina'] || ''}</p>
-              <p><strong>Distance from Haram:</strong> ${pkg['Distance (Madina)'] || ''}</p>
-              <p><strong>Check-in/Check-out:</strong> ${pkg['Check In Date (Madina)'] || ''} to ${pkg['Check Out Date (Madina)'] || ''}</p>
+              <p><strong>Distance from Haram:</strong> ${pkg['Distance Madina'] || ''}</p>
+              <p><strong>Check-in/Check-out:</strong> ${pkg['Check In Date Madina'] || ''} to ${pkg['Check Out Date Madina'] || ''}</p>
             </div>
             
             <div class="detail-group">
