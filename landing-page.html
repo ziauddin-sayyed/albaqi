@@ -383,12 +383,17 @@
         margin: 20,
         nav: true,
         dots: false,
+        navText: [
+          '<img src="images/left.svg" width="50" alt="Left">',
+          '<img src="images/right.svg" width="50" alt="Right">'
+        ],
         responsive: {
           0: { items: 1 },
           768: { items: 2 },
           1024: { items: 3 }
         }
       });
+
       
       // Add event listeners to package cards
       document.querySelectorAll('.package-card').forEach(card => {
